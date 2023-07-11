@@ -6,10 +6,14 @@ import Rent from './pages/Rent';
 
 import DrawerClass from './Component/DrawerClass';
 import Admin from './pages/Admin';
+import DataTable from "./Component/DataTable";
+import DataTablesss from "./Component/DataTable";
+import EditUser from "./pages/EditUser";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+
+<BrowserRouter>
         <DrawerClass>
           <Routes>
             <Route path='/' element={<Owner />}></Route>
@@ -20,6 +24,10 @@ function App() {
           </Routes>
         </DrawerClass>
       </BrowserRouter>
+
+
+      {/* <EditUser/> */}
+   {/* <DataTablesss/> */}
 
     
     </div>
