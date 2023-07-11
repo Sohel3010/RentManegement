@@ -13,7 +13,6 @@ const LoginShop = () => {
                 <div>
                     <button className="login-btn" onClick={() => { navigate("/dashbodar") }}>Login</button>
                 </div>
-
             </div>
         </div>
     )
