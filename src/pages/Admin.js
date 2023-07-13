@@ -6,6 +6,7 @@ import { getUser } from '../Service/Api';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Validation from './Validation';
+import Header from './Header';
 
 let initialValues = {
     id: 0,
@@ -86,8 +87,7 @@ const Admin = () => {
     }
     return (
         <>
-            <h1>User</h1>
-            <hr></hr>
+            <Header></Header>
             <form onSubmit={handleValidation}>
 
                 <Box display="flex"
