@@ -14,6 +14,7 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Icon, TextField } from '@mui/material';
 import OwnerInput from "./OwnerInput";
+import ShopInput from "./ShopInput";
 // import { Button } from 'bootstrap';
 
 const columns = [
@@ -134,10 +135,10 @@ const Shop = () => {
             </div>
             <div>
                 <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>Owner Details</DialogTitle>
+                    <DialogTitle>Shop Details</DialogTitle>
                     <DialogContent>
 
-                        <OwnerInput />
+                        <ShopInput />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
