@@ -142,8 +142,7 @@ const Owner = () => {
   return (
     <>
       <Header/>
-      <div>
-        
+      <div>        
       <Icon color="primary"
           style={styles}
           onClick={() => handleClickOpen()}

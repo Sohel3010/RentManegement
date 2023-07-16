@@ -100,7 +100,7 @@ const Admin = () => {
                     autoComplete="off"
                 >
                     <div>
-                        {errors.firstName && <p style={{ color: "red" }}>{errors.firstName}</p>}
+                        
                         <TextField
                             onChange={(e) => onValueChange(e)}
                             name='firstName'
