@@ -182,7 +182,6 @@ const Shop = () => {
 
                                             <TableCell  >
                                                 {index + 1}
-
                                             </TableCell>
 
 
@@ -197,12 +196,12 @@ const Shop = () => {
                                             </TableCell>
                                             <TableCell key={obj.status} >
                                                 {
-                                                    obj.status == 1 ? 'ACTIVED' : 'DEACTIVATED'
+                                                    obj.status === 1 ? 'ACTIVED' : 'DEACTIVATED'
                                                 }
                                             </TableCell>
                                             <TableCell key={obj.status} >
                                                 {
-                                                    obj.rentType == 'Y' ? 'YEARLY' : 'MONTHLY'
+                                                    obj.rentType === 'Y' ? 'YEARLY' : 'MONTHLY'
                                                 }
                                             </TableCell>
                                         </TableRow>
