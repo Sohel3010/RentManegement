@@ -77,7 +77,7 @@ const Owner = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  
+
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -199,7 +199,7 @@ const Owner = () => {
                         {index+1}                        
                       </TableCell>
                       <TableCell  >
-                        {obj.shop?.nameofshop}                        
+                        {obj.shop?.shopName}                        
                       </TableCell>
                       <TableCell key={obj.ownerName} >
                         {obj.ownerName}
