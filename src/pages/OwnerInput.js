@@ -1,17 +1,18 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogTitle, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { addOwner, getListOwners } from '../Service/OwnerService';
 import { getListOfShop } from '../Service/ShopService';
 
 let initialValues = {
-  // id: 0,
+  id: 0,
   ownerName: '',
   mobileNo: '',
   address: '',
   forWork:'',
-  date:''
+  date:'',
+  shopId:0
   
 }
 const shop = [];
@@ -20,12 +21,21 @@ const shop = [];
 const OwnerInput=()=> {
   const [owner, setOwner] = React.useState(initialValues)
   const [shop, setShop] = React.useState([0])
+  const [save,setSave] = React.useState(false);
+
   const onValueChange = (e) => {
     setOwner({ ...owner, [e.target.name]: e.target.value });
 }
 
 const addOwnerDetails = async () => { 
       await addOwner(owner);
+      setSave(true);
+}
+
+// close save
+const closeSave=()=>{
+  setSave(false);
+  window.location.reload();
 }
 
 React.useEffect(() => {
@@ -37,6 +47,17 @@ const getShopList = async () => {
   setShop(response.data)
  
 }
+const ITEM_HEIGHT = 40;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 200,
+    },
+  },
+};
+
   return (
     <Box
       component="form"
@@ -46,14 +67,14 @@ const getShopList = async () => {
       noValidate
       autoComplete="off"
     >
-    <TextField 
+    {/* <TextField 
               required
               name=''
               label="Shop Name"
               id="outlined-size-small"
               size="small"     
               onChange={(e) => onValueChange(e)}        
-      /> 
+      />  */}
        <TextField 
               required
               name='ownerName'
@@ -61,7 +82,7 @@ const getShopList = async () => {
               id="outlined-size-small"
               size="small" 
               onChange={(e) => onValueChange(e)} 
-              value={owner.ownerName}           
+              value={owner.ownerName}      
       />   
        <TextField 
               required
@@ -108,8 +129,9 @@ const getShopList = async () => {
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 label="Position"
-                                name='empPosition'
+                                name='shopId'
                                 onChange={(e) => onValueChange(e)}
+                                MenuProps={MenuProps}
                             >
                               {shop.map(item =>{
                                 return(
@@ -119,6 +141,19 @@ const getShopList = async () => {
                             </Select>
                         </FormControl>
       <Button onClick={() => addOwnerDetails()}>Save</Button>   
+
+      <Dialog open={save}>
+                    <DialogTitle>
+                        <Alert severity="success">
+                            <AlertTitle>Success</AlertTitle>
+                            Owner Registered — <strong>check it out!</strong>
+                        </Alert>
+
+                    </DialogTitle>
+                    <DialogActions>
+                        <Button onClick={closeSave}>Okay</Button>
+                    </DialogActions>
+                </Dialog>
     </Box>
   );
 }

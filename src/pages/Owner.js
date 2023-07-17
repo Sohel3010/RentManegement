@@ -11,37 +11,37 @@ import Header from './Header';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { getListOwners } from '../Service/OwnerService';
-import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Icon, TextField } from '@mui/material';
-// import { Button } from 'bootstrap';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { addOwner, getListOwners } from '../Service/OwnerService';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import OwnerInput from './OwnerInput';
 
 
 const columns = [
+  { id: 'srNumber', label: 'Sr.No' },
   { id: 'shop.nameofshop', label: 'Shop Name' },
   { id: 'ownerName', label: 'Tenant Name' },
   {
     id: 'mobileNo',
     label: 'Mobile Number',
-    //minWidth: 170,
-    //align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'status',
     label: 'Status',
-    //minWidth: 170,
-    //align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'forWork',
     label: 'Work',
-    //minWidth: 170,
-   // align: 'right',
     format: (value) => value.toFixed(2),
   },
+  {
+    id: 'mark',
+    label: 'Mark',
+  },
+  
 ];
 
 function createData(name, code, population, size) {
@@ -77,6 +77,7 @@ const Owner = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -92,7 +93,6 @@ const Owner = () => {
     marginBottom: '5px',
     [theme.breakpoints.up('sm')]: {
       marginLeft: '80%',
-
       width: '20%',
     },
   }));
@@ -111,7 +111,6 @@ const Owner = () => {
     color: 'inherit',
     '& .MuiInputBase-input': {
       padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
       transition: theme.transitions.create('width'),
       width: '100%',
@@ -153,15 +152,6 @@ const Owner = () => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Owner Details</DialogTitle>
         <DialogContent>
-          {/* <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          /> */}
           <OwnerInput/>
         </DialogContent>
         <DialogActions>
@@ -201,16 +191,16 @@ const Owner = () => {
             <TableBody>
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((obj) => {
+                .map((obj,index) => {
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={obj.id}>
 
                       <TableCell  >
-                        {obj.ownerName}
-                        
+                        {index+1}                        
                       </TableCell>
-
-
+                      <TableCell  >
+                        {obj.shop?.nameofshop}                        
+                      </TableCell>
                       <TableCell key={obj.ownerName} >
                         {obj.ownerName}
                       </TableCell>
@@ -218,10 +208,14 @@ const Owner = () => {
                         {obj.mobileNo}
                       </TableCell>
                       <TableCell key={obj.status} >
-                        {obj.status}
+                        {obj.status == 1 ? 'ACTIVED' : 'DEACTIVATED'}
                       </TableCell>
                       <TableCell key={obj.forWork} >
                         {obj.forWork}
+                      </TableCell>
+                      <TableCell key={obj.forWork} >
+                        <DeleteIcon style={{ marginRight: "50px" }} />
+                        <EditIcon />
                       </TableCell>
                     </TableRow>
                   );

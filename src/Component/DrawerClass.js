@@ -36,7 +36,7 @@ const DrawerClass = ({ children }) => {
             <div className="container">
                 <div style={{ width: isOpen ? "250px" : "53px" }} className="sidebar">
                     <div className="top_section">
-                        <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">Logo</h1>
+                        <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">RENT APP</h1>
                         <div style={{ marginLeft: isOpen ? "50px" : "0" }} className="bars">
                             <HorizontalSplitIcon onClick={toggle} />
                         </div>
