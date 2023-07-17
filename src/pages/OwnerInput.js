@@ -82,7 +82,8 @@ const MenuProps = {
               id="outlined-size-small"
               size="small" 
               onChange={(e) => onValueChange(e)} 
-              value={owner.ownerName}      
+              value={owner.ownerName}  
+              error={owner.ownerName==" "} 
       />   
        <TextField 
               required
@@ -135,7 +136,7 @@ const MenuProps = {
                             >
                               {shop.map(item =>{
                                 return(
-                                  <MenuItem value={item.id}>{item.nameofshop}</MenuItem>
+                                  <MenuItem value={item.id}>{item.shopName}</MenuItem>
                                 )
                               })}
                             </Select>
