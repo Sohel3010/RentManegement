@@ -11,11 +11,12 @@ import Header from './Header';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { addOwner, getListOwners } from '../Service/OwnerService';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon } from '@mui/material';
+import { addOwner, deleteOwner, getListOwners, updateOwner } from '../Service/OwnerService';
+import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import OwnerInput from './OwnerInput';
+import { OwnerModel } from './OwnerModel';
 
 
 const columns = [
@@ -41,6 +42,7 @@ const columns = [
     id: 'mark',
     label: 'Mark',
   },
+ 
   
 ];
 
@@ -56,8 +58,8 @@ const items = [];
 const Owner = () => {
 
   React.useEffect(() => {
-
     getOwnerList();
+
   }, []);
 
   const getOwnerList = async () => {
@@ -69,6 +71,7 @@ const Owner = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setOwners] = React.useState([0]);
+  const [value,setValue]=React.useState(0);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -129,7 +132,13 @@ const Owner = () => {
     marginLeft: "20px"
 
   };
+  // SAVE POP-UP
   const [open, setOpen] = React.useState(false);
+  // DELETE POP-UP
+  const [deletePop,setDeletePop]=React.useState(false);
+  // UPDATE OR EDIT
+  const [editPop,setEditPop]=React.useState(false);
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -138,8 +147,63 @@ const Owner = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  // Delete Owner Details
+  const deleteOwnerData = async (id) => {
+    await deleteOwner(id);
+    setDeletePop(true)
+}
+
+  const deleteOwnerDataClose=()=>{
+    setDeletePop(false);
+    window.location.reload();
+  }
+
+  // Update or Edit owner details
+  const getOwnerData = async (id) => {
+    let response = await updateOwner(id);
+    setOwnerById(response.data);
+    setEditPop(true)
+}
+
+const editOnerPop=()=>{
+  setEditPop(true)
+}
+
+function setOwnerById(data) {
+  OwnerModel.id=data.id;
+  OwnerModel.ownerName=data.ownerName;
+  OwnerModel.mobileNo=data.mobileNo;
+  OwnerModel.address=data.address;
+  OwnerModel.forWork=data.forWork;
+  OwnerModel.date=data.date;
+  OwnerModel.shopId=data.shopId;
+  setValue(OwnerModel)
+}
+
   return (
     <>
+    {/* UPDATE OR EDIT POP-UP */}
+    <Dialog open={editPop} onClose={handleClose}>
+        <DialogTitle>Edit Owner Details</DialogTitle>
+        <DialogContent>
+          <OwnerInput/>
+        </DialogContent>
+    </Dialog>
+
+    {/* DELETE POP-UP */}
+    <div>
+      <Dialog open={deletePop} onClose={handleClose}>
+      <DialogTitle>
+          <Alert severity="success">
+           <AlertTitle>Delete successfully ! </AlertTitle>
+          </Alert>
+      </DialogTitle>
+        <DialogActions>
+          <Button onClick={deleteOwnerDataClose}>Okay</Button>
+        </DialogActions>
+      </Dialog>
+      </div>
       <Header/>
       <div>        
       <Icon color="primary"
@@ -148,16 +212,14 @@ const Owner = () => {
         >add_circle</Icon>
         
       </div>
+
+      {/* SAVE POP-UP */}
       <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Owner Details</DialogTitle>
         <DialogContent>
           <OwnerInput/>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
-        </DialogActions>
       </Dialog>
       </div>
       <div>
@@ -214,8 +276,8 @@ const Owner = () => {
                         {obj.forWork}
                       </TableCell>
                       <TableCell key={obj.forWork} >
-                        <DeleteIcon style={{ marginRight: "50px" }} />
-                        <EditIcon />
+                        <DeleteIcon onClick={() => deleteOwnerData(obj.id)} style={{ marginRight: "50px" }} />
+                        <EditIcon onClick={()=>getOwnerData(obj.id)}/>
                       </TableCell>
                     </TableRow>
                   );

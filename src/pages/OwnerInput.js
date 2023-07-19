@@ -4,22 +4,14 @@ import TextField from '@mui/material/TextField';
 import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogTitle, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { addOwner, getListOwners } from '../Service/OwnerService';
 import { getListOfShop } from '../Service/ShopService';
+import { OwnerModel } from './OwnerModel';
+import { useForm } from 'react-hook-form';
 
-let initialValues = {
-  id: 0,
-  ownerName: '',
-  mobileNo: '',
-  address: '',
-  forWork:'',
-  date:'',
-  shopId:0
-  
-}
 const shop = [];
 
 
 const OwnerInput=()=> {
-  const [owner, setOwner] = React.useState(initialValues)
+  const [owner, setOwner] = React.useState(OwnerModel)
   const [shop, setShop] = React.useState([0])
   const [save,setSave] = React.useState(false);
 
@@ -58,7 +50,11 @@ const MenuProps = {
   },
 };
 
+ 
+
   return (
+  <>
+  <form>
     <Box
       component="form"
       sx={{
@@ -77,16 +73,19 @@ const MenuProps = {
       />  */}
        <TextField 
               required
+              fullWidth
+              autoFocus
               name='ownerName'
               label="Tenants Name"
               id="outlined-size-small"
               size="small" 
               onChange={(e) => onValueChange(e)} 
               value={owner.ownerName}  
-              error={owner.ownerName==" "} 
       />   
        <TextField 
               required
+              fullWidth
+              autoFocus
               name='mobileNo'
               type='number'
               label="Moble number"
@@ -94,6 +93,7 @@ const MenuProps = {
               size="small"    
               onChange={(e) => onValueChange(e)}       
               value={owner.mobileNo}   
+              // error={owner.mobileNo.length>10}
       />   
        <TextField 
               required
@@ -141,9 +141,11 @@ const MenuProps = {
                               })}
                             </Select>
                         </FormControl>
-      <Button onClick={() => addOwnerDetails()}>Save</Button>   
-
-      <Dialog open={save}>
+                              <div style={{marginTop:"10px"}} >
+                              <Button onClick={() => addOwnerDetails()} style={{marginRight:"30px"}}>Save</Button>   
+                              <Button onClick={closeSave}>Cancel</Button> 
+                              </div>
+                   <Dialog open={save}>
                     <DialogTitle>
                         <Alert severity="success">
                             <AlertTitle>Success</AlertTitle>
@@ -156,6 +158,8 @@ const MenuProps = {
                     </DialogActions>
                 </Dialog>
     </Box>
+  </form>
+  </>  
   );
 }
 export default OwnerInput;
