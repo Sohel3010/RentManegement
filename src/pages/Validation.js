@@ -1,36 +1,27 @@
-export default function Validation(user){
+export default function Validation(owner){
     const errors={}
-
-    const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,6}$/;
+    // const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,6}$/;
     
-    if(user.firstName === ""){
-        errors.firstName="First Name  is required!";
+    if(owner.ownerName === ""){
+        errors.ownerName="Owner Name  is required!";
     }
-    if(user.middleName===""){
-        errors.middleName="Middle Name is required!";
-    }
-    if(user.lastName===""){
-        errors.lastName="Last Name is required!";
-    
-    }
-    if(user.empPosition===""){
-        errors.empPosition="Emplyee Position is required!";
-    }
-    if(user.email === ""){
-        errors.email="Email is required!"
-    }else if(!email_pattern.test(user.email)){
-        errors.email="Email is did'nt match";
-    }
-    if(user.password===""){
-        errors.password="Password is required!";
-    }
-    if(user.mobileNo===""){
+    if(owner.mobileNo===""){
         errors.mobileNo="Mobile Number is required!";
     }
-    if(user.salary===""){
-        errors.salary="Salary is required!";
+    if(owner.address===""){
+        errors.address="Address is required!";
+    
     }
-
+    if(owner.forWork===""){
+        errors.forWork="Work is required!";
+    }
+    if(owner.shopId==0){
+        errors.shopId="Work is required!";
+    }
+    if(owner.date==null){
+        errors.date="Work is required!";
+    }
+   
     
 
     return errors;

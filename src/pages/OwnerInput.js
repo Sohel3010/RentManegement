@@ -5,7 +5,7 @@ import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogTitle, FormCont
 import { addOwner, getListOwners } from '../Service/OwnerService';
 import { getListOfShop } from '../Service/ShopService';
 import { OwnerModel } from './OwnerModel';
-import { useForm } from 'react-hook-form';
+import Validation from './Validation';
 
 const shop = [];
 
@@ -14,14 +14,18 @@ const OwnerInput=()=> {
   const [owner, setOwner] = React.useState(OwnerModel)
   const [shop, setShop] = React.useState([0])
   const [save,setSave] = React.useState(false);
+  const [errors,setErrors] = React.useState({}) 
 
   const onValueChange = (e) => {
     setOwner({ ...owner, [e.target.name]: e.target.value });
 }
 
 const addOwnerDetails = async () => { 
-      await addOwner(owner);
-      setSave(true);
+  if(owner.ownerName !=="" && owner.mobileNo!=="" && owner.address!=="" && owner.forWork!=="" && owner.shopId!==0){
+    await addOwner(owner);
+    setSave(true);
+  }
+  setErrors(Validation(owner));
 }
 
 // close save
@@ -71,6 +75,7 @@ const MenuProps = {
               size="small"     
               onChange={(e) => onValueChange(e)}        
       />  */}
+      {/* {errors.ownerName && <p style={{color:"red"}}>{errors.ownerName}</p>} */}
        <TextField 
               required
               fullWidth
@@ -81,19 +86,18 @@ const MenuProps = {
               size="small" 
               onChange={(e) => onValueChange(e)} 
               value={owner.ownerName}  
+              error={errors.ownerName}
       />   
        <TextField 
               required
-              fullWidth
-              autoFocus
               name='mobileNo'
               type='number'
               label="Moble number"
               id="outlined-size-small"
               size="small"    
               onChange={(e) => onValueChange(e)}       
-              value={owner.mobileNo}   
-              // error={owner.mobileNo.length>10}
+              value={owner.mobileNo}
+              error={errors.mobileNo}
       />   
        <TextField 
               required
@@ -102,7 +106,8 @@ const MenuProps = {
               id="outlined-size-small"
               size="small"    
               onChange={(e) => onValueChange(e)}     
-              value={owner.address}     
+              value={owner.address}    
+              error={errors.address} 
       /> 
        <TextField 
               required
@@ -111,7 +116,8 @@ const MenuProps = {
               id="outlined-size-small"
               size="small"   
               onChange={(e) => onValueChange(e)}     
-              value={owner.forWork}      
+              value={owner.forWork} 
+              error={errors.forWork}     
       />   
        <TextField 
               required
@@ -120,7 +126,8 @@ const MenuProps = {
               id="outlined-size-small"
               size="small"  
               onChange={(e) => onValueChange(e)} 
-              value={owner.date}                          
+              value={owner.date}   
+              error={errors.date}                       
       />      
        <FormControl sx={{ width: "220px", marginLeft: "10px" }}>
                             {/* {errors.empPosition && <p style={{ color: "red" }}>{errors.empPosition}</p>} */}
@@ -133,6 +140,7 @@ const MenuProps = {
                                 name='shopId'
                                 onChange={(e) => onValueChange(e)}
                                 MenuProps={MenuProps}
+                                error={errors.shopId}
                             >
                               {shop.map(item =>{
                                 return(
