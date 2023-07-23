@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
 import { addUser } from '../Service/Api';
 
 
@@ -19,6 +19,7 @@ let initialValues = {
 }
 const AdminInput=()=>{
   const [admin, setAdmin] = React.useState(initialValues)
+  const [save,setSave] = React.useState(false);
 
   const onValueChange = (e) => {
     setAdmin({...admin, [e.target.name]: e.target.value });
@@ -27,8 +28,20 @@ const AdminInput=()=>{
 // Add Admin
 const addAdminDetails = async () => {
       await addUser(admin);
+      setSave(true);
+
+}
+
+
+// close pop-up to save
+const closeSave=()=>{
+  setSave(false);
+  window.location.reload();
+  
 }
   return (
+    <>
+    <form>
     <Box
       component="form"
       sx={{
@@ -92,9 +105,26 @@ const addAdminDetails = async () => {
               onChange={(e) => onValueChange(e)} 
               value={admin.mobileNo}                          
       />      
-       
-      <Button onClick={() => addAdminDetails()}>Save</Button>   
+       <div style={{marginTop:"10px"}}>
+      <Button onClick={() => addAdminDetails()} style={{marginRight:"30px"}}>Save</Button>   
+      <Button onClick={closeSave}>Cancel</Button>
+      </div>
+
+      <Dialog open={save}>
+                    <DialogTitle>
+                        <Alert severity="success">
+                            <AlertTitle>Success</AlertTitle>
+                            Admin Registered — <strong>check it out!</strong>
+                        </Alert>
+
+                    </DialogTitle>
+                    <DialogActions>
+                        <Button onClick={closeSave}>Okay</Button>
+                    </DialogActions>
+                </Dialog>
     </Box>
+    </form>
+    </>
   );
 }
 export default AdminInput;

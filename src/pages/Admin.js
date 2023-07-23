@@ -12,7 +12,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { getListOwners } from '../Service/OwnerService';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon } from '@mui/material';
+import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import OwnerInput from './OwnerInput';
@@ -24,10 +24,12 @@ const columns = [
   { id: 'srNumber', label: 'Sr.No' },
   { id: 'admin.firstName', label: 'First Name' },
   { id: 'admin.middleName', label: 'Middle Name' },
-  { id: 'admin.lastName',label: 'Last Name',
+  {
+    id: 'admin.lastName', label: 'Last Name',
     // format: (value) => value.toLocaleString('en-US'),
   },
-  { id: 'admin.empPosition',label: 'Position',
+  {
+    id: 'admin.empPosition', label: 'Position',
     // format: (value) => value.toLocaleString('en-US'),
   },
   {
@@ -35,13 +37,15 @@ const columns = [
     label: 'Email',
     format: (value) => value.toFixed(2),
   },
-  { id: 'admin.mobileNo',
+  {
+    id: 'admin.mobileNo',
     label: 'Mobile Number',
   },
-  { id: 'mark',
-  label: 'Mark',
-},
-  
+  {
+    id: 'mark',
+    label: 'Mark',
+  },
+
 ];
 
 function createData(name, code, population, size) {
@@ -63,7 +67,7 @@ const Admin = () => {
   const getUserDetails = async () => {
     let response = await getUser();
     setAdmin(response.data)
-   
+
   }
 
   const [page, setPage] = React.useState(0);
@@ -129,6 +133,7 @@ const Admin = () => {
 
   };
   const [open, setOpen] = React.useState(false);
+  const [deletePop, setDeletePop] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -136,33 +141,46 @@ const Admin = () => {
 
   const handleClose = () => {
     setOpen(false);
+    window.location.reload();
   };
 
   // delete Admin
   const deleteAdmin = async (id) => {
+    setDeletePop(true);
     await deleteUser(id);
-}
+  }
   return (
     <>
-      <Header/>
-      <div>        
-      <Icon color="primary"
+      <Header />
+      <div>
+        <Icon color="primary"
           style={styles}
           onClick={() => handleClickOpen()}
         >add_circle</Icon>
-        
+
       </div>
+      {/* Delete pop-up */}
       <div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Admin Details</DialogTitle>
-        <DialogContent>
-          <AdminInput/>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
+        <Dialog open={deletePop}>
+          <DialogTitle>
+            <Alert severity="success">
+            <AlertTitle>Delete successfully ! </AlertTitle>
+          </Alert>
+          </DialogTitle>
+          <DialogActions>
+          <Button onClick={handleClose}>Okay</Button>
         </DialogActions>
-      </Dialog>
+        </Dialog>
+      </div>
+
+      {/* Save pop-up */}
+      <div>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Admin Details</DialogTitle>
+          <DialogContent>
+            <AdminInput />
+          </DialogContent>
+        </Dialog>
       </div>
       <div>
         <Search>
@@ -195,14 +213,14 @@ const Admin = () => {
             <TableBody>
               {admin
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((obj,index) => {
+                .map((obj, index) => {
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={obj.id}>
                       <TableCell  >
-                        {index+1}                        
+                        {index + 1}
                       </TableCell>
-                      <TableCell  key={obj.firstName}>
-                        {obj.firstName}                        
+                      <TableCell key={obj.firstName}>
+                        {obj.firstName}
                       </TableCell>
                       <TableCell key={obj.middleName} >
                         {obj.middleName}
