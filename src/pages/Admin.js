@@ -11,13 +11,12 @@ import Header from './Header';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { getListOwners } from '../Service/OwnerService';
 import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import OwnerInput from './OwnerInput';
-import { deleteUser, getUser } from '../Service/Api';
+import { deleteUser, getUser, updateUser } from '../Service/Api';
 import AdminInput from './AdminInput';
+import { AdminModel } from './AdminModel';
 
 
 const columns = [
@@ -26,11 +25,9 @@ const columns = [
   { id: 'admin.middleName', label: 'Middle Name' },
   {
     id: 'admin.lastName', label: 'Last Name',
-    // format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'admin.empPosition', label: 'Position',
-    // format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'admin.email',
@@ -53,7 +50,6 @@ function createData(name, code, population, size) {
   return { name, code, population, size, density };
 }
 
-// const admin = [];
 
 const items = [];
 
@@ -134,6 +130,8 @@ const Admin = () => {
   };
   const [open, setOpen] = React.useState(false);
   const [deletePop, setDeletePop] = React.useState(false);
+  const [editPop,setEditPop]=React.useState(false)
+  const [value,setValue]=React.useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -149,8 +147,37 @@ const Admin = () => {
     setDeletePop(true);
     await deleteUser(id);
   }
+
+   // Update or Edit owner details
+   const getAdminData = async (id) => {
+    let response = await updateUser(id);
+    setAdminById(response.data);
+    setEditPop(true)
+}
+
+const editOnerPop=()=>{
+  setEditPop(true)
+}
+
+function setAdminById(data) {
+  AdminModel.id=data.id;
+  AdminModel.firstName=data.firstName;
+  AdminModel.middleName=data.middleName;
+  AdminModel.lastName=data.lastName;
+  AdminModel.empPosition=data.empPosition;
+  AdminModel.email=data.email;
+  AdminModel.mobileNo=data.mobileNo;
+  setValue(AdminModel)
+}
   return (
     <>
+    {/* UPDATE ADMIN */}
+    <Dialog open={editPop} onClose={handleClose}>
+        <DialogTitle>Edit Owner Details</DialogTitle>
+        <DialogContent>
+          <AdminInput/>
+        </DialogContent>
+    </Dialog>
       <Header />
       <div>
         <Icon color="primary"
@@ -239,7 +266,7 @@ const Admin = () => {
                       </TableCell>
                       <TableCell key={obj.forWork} >
                         <DeleteIcon onClick={() => deleteAdmin(obj.id)} style={{ marginRight: "50px" }} />
-                        <EditIcon />
+                        <EditIcon onClick={()=>getAdminData(obj.id)}/>
                       </TableCell>
                     </TableRow>
                   );

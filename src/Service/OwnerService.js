@@ -5,6 +5,7 @@ const OWNER_LIST = `${API_URL}owners/list`;
 const SAVE_USER = `${API_URL}owners/save`;
 const DELETE_OWNER = `${API_URL}owners/delete`;
 const UPDATE_OWNER = `${API_URL}owners/byId`;
+const SHOP_LIST = `${API_URL}shop/notRended`;
 
 // Get All Owner List
 export const getListOwners = async () => {
@@ -44,5 +45,14 @@ export const updateOwner = async (id) => {
     }
 }
 
+// Get Shop in not rented
+export const getShopNotRented = async () => {
+    try {
+        return await axios.get(SHOP_LIST);
+    } catch (error) {
+        console.log('Error while calling get shop by not rented api', error.message);
 
+    }
+
+}
 

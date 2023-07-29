@@ -20,7 +20,7 @@ const ShopInput = () => {
 
     const handleChange = (e) => {
         setCategoryModel({ ...category, [e.target.name]: e.target.value });
-        setShop({...shop,category});
+        setShop({ ...shop, category });
     };
 
     const addShopDetails = async () => {

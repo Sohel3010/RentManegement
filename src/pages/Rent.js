@@ -12,7 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Icon, TextField } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon } from '@mui/material';
 import OwnerInput from "./OwnerInput";
 
 const columns = [
@@ -99,7 +99,6 @@ const Rent = () => {
         color: 'inherit',
         '& .MuiInputBase-input': {
             padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)})`,
             transition: theme.transitions.create('width'),
             width: '100%',
@@ -170,8 +169,7 @@ const Rent = () => {
                                 {columns.map((column) => (
                                     <TableCell
                                         key={column.id}
-                                    // align={column.align}
-                                    // style={{ minWidth: column.minWidth }}
+                                    
                                     >
                                         {column.label}
                                     </TableCell>

@@ -3,7 +3,6 @@ export const OwnerModel = {
     ownerName: '',
     mobileNo: '',
     address: '',
-    forWork:'',
-    date:'',
-    shopId:0
+    year:'',
+    date:''
 }

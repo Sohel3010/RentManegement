@@ -12,10 +12,8 @@ import TableRow from '@mui/material/TableRow';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Icon, TextField } from '@mui/material';
-import OwnerInput from "./OwnerInput";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon } from '@mui/material';
 import ShopInput from "./ShopInput";
-// import { Button } from 'bootstrap';
 
 const columns = [
 
@@ -166,8 +164,7 @@ const Shop = () => {
                                 {columns.map((column) => (
                                     <TableCell
                                         key={column.id}
-                                    // align={column.align}
-                                    // style={{ minWidth: column.minWidth }}
+
                                     >
                                         {column.label}
                                     </TableCell>

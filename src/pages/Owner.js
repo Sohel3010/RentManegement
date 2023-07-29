@@ -11,7 +11,7 @@ import Header from './Header';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { addOwner, deleteOwner, getListOwners, updateOwner } from '../Service/OwnerService';
+import { deleteOwner, getListOwners, updateOwner } from '../Service/OwnerService';
 import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -28,19 +28,14 @@ const columns = [
     label: 'Mobile Number',
     format: (value) => value.toLocaleString('en-US'),
   },
+  
   {
-    id: 'status',
-    label: 'Status',
-    format: (value) => value.toLocaleString('en-US'),
+    id: 'year',
+    label: 'Year',
   },
   {
-    id: 'forWork',
-    label: 'Work',
-    format: (value) => value.toFixed(2),
-  },
-  {
-    id: 'mark',
-    label: 'Mark',
+    id: 'action',
+    label: 'Action',
   },
  
   
@@ -65,6 +60,7 @@ const Owner = () => {
   const getOwnerList = async () => {
     let response = await getListOwners();
     setOwners(response.data)
+    console.log((response.data));
    
   }
 
@@ -175,9 +171,9 @@ function setOwnerById(data) {
   OwnerModel.ownerName=data.ownerName;
   OwnerModel.mobileNo=data.mobileNo;
   OwnerModel.address=data.address;
-  OwnerModel.forWork=data.forWork;
+  OwnerModel.year=data.year;
   OwnerModel.date=data.date;
-  OwnerModel.shopId=data.shopId;
+  OwnerModel.shopName=data.shopName;
   setValue(OwnerModel)
 }
 
@@ -269,13 +265,10 @@ function setOwnerById(data) {
                       <TableCell key={obj.mobileNo} >
                         {obj.mobileNo}
                       </TableCell>
-                      <TableCell key={obj.status} >
-                        {obj.status == 1 ? 'ACTIVED' : 'DEACTIVATED'}
+                      <TableCell key={obj.year} >
+                        {obj.year}
                       </TableCell>
-                      <TableCell key={obj.forWork} >
-                        {obj.forWork}
-                      </TableCell>
-                      <TableCell key={obj.forWork} >
+                      <TableCell>
                         <DeleteIcon onClick={() => deleteOwnerData(obj.id)} style={{ marginRight: "50px" }} />
                         <EditIcon onClick={()=>getOwnerData(obj.id)}/>
                       </TableCell>

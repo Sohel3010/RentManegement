@@ -15,7 +15,7 @@ export default function Validation(owner){
     if(owner.forWork===""){
         errors.forWork="Work is required!";
     }
-    if(owner.shopId==0){
+    if(owner.shopId===0){
         errors.shopId="Work is required!";
     }
     if(owner.date==null){
@@ -26,3 +26,7 @@ export default function Validation(owner){
 
     return errors;
 }
+
+
+
+  
