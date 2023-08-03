@@ -17,9 +17,10 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { addRent } from "../Service/RentService";
+import { addRent, updateRent } from "../Service/RentService";
 import { RentModel } from "./RentModel";
 import { getListOwners } from "../Service/OwnerService";
+import { getShopByID, updateShop } from "../Service/ShopService";
 
 const shop = [];
 const rent = [];
@@ -28,11 +29,12 @@ const RentInput = () => {
   const [rent, setRent] = React.useState(RentModel);
   const [shop, setShop] = React.useState([0]);
   const [save, setSave] = React.useState(false);
+  const [actualamount, setValueOfRent] = React.useState(0);
 
   const onValueChange = (e) => {
     const { name, value } = e.target;
-    setRent({ ...rent, [name]: value });  
-};
+    setRent({ ...rent, [name]: value });
+  };
 
   const addRentDetails = async () => {
     let response = await addRent(rent);
@@ -53,8 +55,20 @@ const RentInput = () => {
   const getRentList = async () => {
     let response = await getListOwners();
     setShop(response.data);
+  };
 
-    
+  const getShopById = async (shopid, ownerid) => {
+    //setRent({ [rent?.shopOwner?.id]: ownerid });
+    let response = await getShopByID(shopid);
+    setValueOfRent(response.data.rent);
+  };
+
+  const [selectedYear, setSelectedYear] = React.useState(null);
+
+  const handleYearChange = (year) => {
+    setSelectedYear(year);
+    console.log(year);
+    // You can perform any other actions you need with the selected year here
   };
 
   const ITEM_HEIGHT = 40;
@@ -86,11 +100,15 @@ const RentInput = () => {
           label="Shop Owner"
           name="ownerName"
           MenuProps={MenuProps}
-          onChange={(e) => onValueChange(e)}
+          // onChange={(e) =>getShopById()}
         >
           {shop.map((item) => {
             return (
-              <MenuItem key={item?.id} value={item?.id}>
+              <MenuItem
+                key={item?.id}
+                value={item?.id}
+                onClick={() => getShopById(item?.shop?.id, item.id)}
+              >
                 {item.ownerName}({item.shop?.shopName})
               </MenuItem>
             );
@@ -103,24 +121,30 @@ const RentInput = () => {
         name="amount"
         label="Actual Rent"
         type="number"
-        // id="outlined-size-small"
+        id="outlined-size-small"
         size="small"
-        //disabled
+        disabled
         onChange={(e) => onValueChange(e)}
-        value={rent.amount}
+        value={actualamount}
       />
 
-      {/* <TextField
-        required
-        name="year"
-        label="Year"
-        type="text"
-        // id="outlined-size-small"
-        size="small"
-        onChange={(e) => onValueChange(e)}
-        value={rent.year}
-      /> */}
-
+      <FormControl sx={{ width: "220px", marginLeft: "10px" }}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DatePicker", "DatePicker"]}>
+            <DatePicker
+              label={"Select Year"}
+              openTo="year"
+              views={["year"]}
+              name="cyear"
+              value={selectedYear} // Set the selected year as the value prop
+              onChange={(date) => {
+                const dt = new Date(date);
+                handleYearChange(dt.getFullYear());
+              }} // Extract the year from the date and pass it to the handler
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+      </FormControl>
       <TextField
         required
         name="paid"
@@ -153,17 +177,6 @@ const RentInput = () => {
         </Select>
       </FormControl>
 
-      {/* <TextField
-        required
-        name="status"
-        label="Status"
-        type="text"
-        // id="outlined-size-small"
-        size="small"
-        onChange={(e) => onValueChange(e)}
-        value={rent.status}
-      /> */}
-
       <FormControl sx={{ width: "220px", marginLeft: "10px" }}>
         <InputLabel id="demo-simple-select-label">Rent Type</InputLabel>
         <Select
@@ -178,12 +191,6 @@ const RentInput = () => {
           <MenuItem value="D">Deposit</MenuItem>
         </Select>
       </FormControl>
-
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={["DatePicker", "DatePicker"]}>
-          <DatePicker label={"Select Year"} openTo="year" views={["year"]} />
-        </DemoContainer>
-      </LocalizationProvider>
 
       <Button onClick={() => addRentDetails()}>Save</Button>
 
