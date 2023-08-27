@@ -5,6 +5,10 @@ import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogTitle, FormCont
 import { addOwner, getShopNotRented } from '../Service/OwnerService';
 import { OwnerModel } from './OwnerModel';
 import Validation from './Validation';
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 const shop = [];
 
@@ -40,6 +44,7 @@ const OwnerInput = () => {
   const getShopList = async () => {
     let response = await getShopNotRented();
     setShop(response.data)
+    console.log(response.data);
 
   }
   const ITEM_HEIGHT = 40;
@@ -106,9 +111,16 @@ const OwnerInput = () => {
             name='year'
             id="outlined-size-small"
             size="small"
+            // label={"Select Year"}
+            openTo="year" views={["year"]}
             onChange={(e) => onValueChange(e)}
             value={owner.year}
           />
+          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DatePicker", "DatePicker"]}>
+              <DatePicker label={"Select Year"} openTo="year" views={["year"]} />
+            </DemoContainer>
+          </LocalizationProvider> */}
           <TextField
             required
             name='date'

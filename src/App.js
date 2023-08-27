@@ -13,14 +13,13 @@ function App() {
       <BrowserRouter>
         <DrawerClass>
           <Routes>
-            <Route path='/' element={<Owner />}></Route>
+            <Route path='/' element={<Rent />}></Route>
             <Route path='/shop' element={<Shop />}></Route>
             <Route path='/admin' element={<Admin />}></Route>
-            <Route path='/rent' element={<Rent />}></Route>
+            <Route path='/owner' element={<Owner />}></Route>
           </Routes>
         </DrawerClass>
       </BrowserRouter>
-
     </div>
   );
 }

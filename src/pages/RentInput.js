@@ -63,13 +63,13 @@ const RentInput = () => {
     setValueOfRent(response.data.rent);
   };
 
-  const [selectedYear, setSelectedYear] = React.useState(null);
+  // const [selectedYear, setSelectedYear] = React.useState(null);
 
-  const handleYearChange = (year) => {
-    setSelectedYear(year);
-    console.log(year);
-    // You can perform any other actions you need with the selected year here
-  };
+  // const handleYearChange = (year) => {
+  //   setSelectedYear(year);
+  //   console.log(year);
+  //   // You can perform any other actions you need with the selected year here
+  // };
 
   const ITEM_HEIGHT = 40;
   const ITEM_PADDING_TOP = 8;
@@ -128,23 +128,14 @@ const RentInput = () => {
         value={actualamount}
       />
 
-      <FormControl sx={{ width: "220px", marginLeft: "10px" }}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DatePicker", "DatePicker"]}>
-            <DatePicker
-              label={"Select Year"}
-              openTo="year"
-              views={["year"]}
-              name="cyear"
-              value={selectedYear} // Set the selected year as the value prop
-              onChange={(date) => {
-                const dt = new Date(date);
-                handleYearChange(dt.getFullYear());
-              }} // Extract the year from the date and pass it to the handler
-            />
-          </DemoContainer>
-        </LocalizationProvider>
-      </FormControl>
+<FormControl sx={{ width: "220px", marginLeft: "10px" }}>
+	  <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer components={['DatePicker', 'DatePicker']}>
+        <DatePicker label={'"year"'} openTo="year" views={['year']} />
+        
+      </DemoContainer>
+    </LocalizationProvider>
+	 </FormControl> 
       <TextField
         required
         name="paid"
