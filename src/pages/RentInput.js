@@ -54,7 +54,9 @@ const RentInput = () => {
 
   const getRentList = async () => {
     let response = await getListOwners();
-    setShop(response.data);
+    if(response !="" && response!=null){
+      setShop(response.data);
+    }
   };
 
   const getShopById = async (shopid, ownerid) => {
