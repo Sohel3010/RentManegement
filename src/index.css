@@ -1,15 +1,13 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.custom-date{
+  /* width: 100%; */
+  width: 230px;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+form .MuiStack-root{
+  margin-bottom: 18px !important;
 }
-
-
+.custem-form{
+  margin-top: 50px;
+}
+form .MuiInputBase-input-MuiOutlinedInput-input{
+  width: 400px;
+}

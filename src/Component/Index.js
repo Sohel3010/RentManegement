@@ -60,6 +60,14 @@ export default function Index() {
                 <ListItemText primary="Shop" style={{ color: "white" }} />
               </ListItemButton>
             </Link>
+            <Link to={"/shopRent"}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemIcon style={{ color: "white" }}>
+                <CurrencyRupeeIcon style={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="ShopRent" style={{ color: "white" }} />
+              </ListItemButton>
+            </Link>
             <Link to={"/owner"} >
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon style={{ color: "white" }}>
