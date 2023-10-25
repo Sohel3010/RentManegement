@@ -6,7 +6,6 @@ import DrawerClass from './Component/DrawerClass';
 import Admin from './pages/Admin';
 import ShopRent from "./pages/ShopRent";
 
-
 function App() {
   return (
     <div className="App">
